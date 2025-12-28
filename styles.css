@@ -1,0 +1,85 @@
+body {
+	text-align: center;
+	font-family: Arial, sans-serif;
+}
+
+.piano {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	margin-top: 40px;
+}
+
+/* Teclas blancas */
+.white {
+	width: 70px;
+	height: 260px;
+	background: linear-gradient(to bottom, #fff, #eee);
+	border: 1px solid #000;
+	position: relative;
+	box-shadow: 0 6px 0 #bbb;
+	transition: all 0.08s ease;
+}
+
+/* Teclas negras */
+.black {
+	width: 45px;
+	height: 160px;
+	background: linear-gradient(to bottom, #000, #333);
+	position: absolute;
+	top: 0;
+	right: -22px;
+	z-index: 2;
+	box-shadow: 0 4px 0 #111;
+	transition: all 0.08s ease;
+}
+
+/* Efecto al presionar */
+.withe:active {
+	background: #ccc;
+}
+
+.black:active {
+	background: #444;
+}
+
+.white.active {
+	transform: translateY(4px);
+	box-shadow: 0 2px 0 #999;
+	background: #ddd;
+}
+
+.black.active {
+	transform: translateY(3px);
+	box-shadow: 0 1px 0 #000;
+	background: #444;
+}
+
+#note-indicator {
+	font-size: 22px;
+	margin-bottom: 20px;
+	font-weight: bold;
+}
+
+#current-note {
+	color: #d35400;
+}
+
+#keyboard-guide {
+	margin: 15px 0 25px;
+	font-size: 14px;
+}
+
+.keys-row {
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+}
+
+.keys-row span {
+	border: 1px solid #333;
+	padding: 6px 10px;
+	border-radius: 4px;
+	background: #f5f5f5;
+	font-weight: bold;
+}

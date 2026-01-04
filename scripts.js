@@ -1,3 +1,7 @@
+let isRecording = false;
+let recordedNotes = [];
+let startTime = 0;
+
 const keyMap = {
 	"a": "C",
 	"w": "Cs",
@@ -53,6 +57,12 @@ function playSound(note) {
   audio.play();
   document.getElementById("current-note").textContent = noteNames[note] || note; //INDICADOR DE NOTA TOCADA
   animateKey(note);
+
+//Guardar nota si se esta grabando
+  if (isRecording) {
+  	const time = Date.now() - startTime;
+  	recordedNotes.push({ note, time });
+  }
 }
 
 function animateKey(note) {
@@ -64,4 +74,58 @@ function animateKey(note) {
 	setTimeout(() => {
 		key.classList.remove("active");
 	}, 150);
+}
+
+//Boton grabar
+const recordBtn = document.getElementById("recordBtn");
+const playBtn = document.getElementById("playBtn");
+const clearBtn = document.getElementById("clearBtn");
+
+recordBtn.addEventListener("click", () => {
+  if (!isRecording) {
+    // ▶️ EMPEZAR GRABACIÓN
+    recordedNotes = [];
+    isRecording = true;
+    startTime = Date.now();
+    recordBtn.textContent = "⏹ Detener";
+  } else {
+    // ⏹ DETENER GRABACIÓN
+    isRecording = false;
+    recordBtn.textContent = "⏺ Grabar";
+  }
+});
+
+//Boton reproducir
+playBtn.addEventListener("click", async () => {
+  if (recordedNotes.length === 0) return;
+
+  for (let i = 0; i < recordedNotes.length; i++) {
+    const current = recordedNotes[i];
+    const previous = recordedNotes[i - 1];
+
+    const delay = i === 0 ? current.time : current.time - previous.time;
+
+    await wait(delay);
+    playSound(current.note);
+  }
+});
+
+
+//Boton borrar
+clearBtn.addEventListener("click", () => {
+  if (recordedNotes.length === 0) {
+    alert("No hay ninguna grabación para borrar.");
+    return;
+  }
+
+  const confirmDelete = confirm("¿Seguro que querés borrar la grabación?");
+
+  if (confirmDelete) {
+    recordedNotes = [];
+    alert("Grabación borrada correctamente.");
+  }
+});
+
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

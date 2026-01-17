@@ -94,3 +94,22 @@ body {
 	font-size: 16px;
 	cursor: pointer;
 }
+
+#melody-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+#melody-list li {
+  cursor: pointer;
+  padding: 6px;
+}
+
+#melody-list li:hover {
+  background: #eee;
+}
+
+.active-melody {
+  font-weight: bold;
+  color: green;
+}
